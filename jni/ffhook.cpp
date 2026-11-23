@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <sys/mman.h>
 #include <sys/syscall.h>
+#include <sys/stat.h> // <-- INCLUDE ADICIONADO AQUI
 #include <fcntl.h>
 #include <dirent.h>
 #include <string.h>
@@ -142,7 +143,6 @@ void DrawESP(uintptr_t base, float width, float height) {
         Vector3 screenPos;
         
         if (WorldToScreen(worldPos, screenPos, viewMatrix, width, height)) {
-            // AQUI ENTRA O IMGUI
             LOGD("Player ESP: X %f Y %f", screenPos.x, screenPos.y);
         }
     }
@@ -278,13 +278,3 @@ Java_com_allhack_cheats_NativeBridge_updateESP(JNIEnv* env, jclass clazz, jint w
         }
     }
 }
-LOCAL_PATH := $(call my-dir)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE    := ffhook
-LOCAL_SRC_FILES := ffhook.cpp
-LOCAL_LDLIBS    := -llog -ldl -landroid
-include $(BUILD_SHARED_LIBRARY)
-APP_ABI := arm64-v8a
-APP_PLATFORM := android-21
-APP_STL := c++_shared
